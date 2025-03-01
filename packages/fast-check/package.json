@@ -19,6 +19,13 @@
   },
   "module": "lib/fast-check.js",
   "types": "lib/types/fast-check.d.ts",
+  "typesVersions": {
+    "<5.7": {
+      "lib/types/fast-check.d.ts": [
+        "lib/types57/fast-check.d.ts"
+      ]
+    }
+  },
   "files": [
     "lib",
     "runkit.cjs"

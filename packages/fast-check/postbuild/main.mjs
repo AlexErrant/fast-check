@@ -67,8 +67,18 @@ fs.readFile(path.join(__dirname, '../package.json'), (err, data) => {
     from: [/__PACKAGE_VERSION__/g, /__COMMIT_HASH__/g],
     to: [packageVersion, commitHash],
   });
-  if (dTsReplacement2.length === 1 && dTsReplacement[0].hasChanged) {
+  if (dTsReplacement2.length === 1 && dTsReplacement2[0].hasChanged) {
     console.info(`Package details added onto d.ts version for esm`);
+  }
+
+  fs.cpSync('lib/types', 'lib/types57', { recursive: true });
+  const dTsReplacement57 = replaceInFileSync({
+    files: 'lib/types57/**/*.d.ts',
+    from: [/Uint8Array<ArrayBuffer>/g],
+    to: ['Uint8Array'],
+  });
+  for (const result of dTsReplacement57.filter((x) => x.hasChanged)) {
+    console.info(`Stripped generic from typed arrays for `, result.file);
   }
 
   function escapeHtml(unsafe) {
